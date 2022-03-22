@@ -1,61 +1,60 @@
-     
-#include <stdio.h>    
-#include <freertos/FreeRTOS.h>
-#include <freertos/task.h>
-#include <driver/gpio.h> 
+     #include <stdio.h>
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "esp_system.h"
+#include "driver/gpio.h"
 
+#define BLINK_GPIO 2
+int core0 = 0;
+int core1 = 0;
+int core2 = 0;
+TaskHandle_t Task2, Task3;
 
-
-#define pin1 22 //led incluido
-#define pin2 19
-#define pin3 23
-#define pin4 18
-
-
-   
-
-void app_main(void)
-{
-
-     gpio_pad_select_gpio(pin1);
-    gpio_set_direction(pin1, GPIO_MODE_OUTPUT);
-
-    gpio_pad_select_gpio(pin2);
-    gpio_set_direction(pin2, GPIO_MODE_OUTPUT);
-
-    gpio_pad_select_gpio(pin3);
-    gpio_set_direction(pin3, GPIO_MODE_OUTPUT);
-
-    gpio_pad_select_gpio(pin4);
-    gpio_set_direction(pin4, GPIO_MODE_OUTPUT);
+void loop2(void *parameter){
+  for(;;){
+       printf("Hola desde el loop 2\n");
+    vTaskDelay(3000/portTICK_PERIOD_MS);
     
-    for(;;){
-   
-for (int i = 0; i < 512; i++)
-{
-     gpio_set_level(pin1, 1);
-     gpio_set_level(pin2, 0);
-     gpio_set_level(pin3, 0);
-     gpio_set_level(pin4, 0);
-     vTaskDelay(15/portTICK_PERIOD_MS); //delays
-     gpio_set_level(pin1, 0);
-     gpio_set_level(pin2, 1);
-     gpio_set_level(pin3, 0);
-     gpio_set_level(pin4, 0);
-     vTaskDelay(15/portTICK_PERIOD_MS); //delays
-     gpio_set_level(pin1, 0);
-     gpio_set_level(pin2, 0);
-     gpio_set_level(pin3, 1);
-     gpio_set_level(pin4, 0);
-     vTaskDelay(15/portTICK_PERIOD_MS); //delays
-     gpio_set_level(pin1, 0);
-     gpio_set_level(pin2, 0);
-     gpio_set_level(pin3, 0);
-     gpio_set_level(pin4, 1);
-     vTaskDelay(20/portTICK_PERIOD_MS); //delays
     
+  }
+  vTaskDelay(10);
 }
 
+void loop3(void *parameter){
+  for(;;){
+       printf("Hola desde el loop 3\n");
+    vTaskDelay(2000/portTICK_PERIOD_MS);
+    
+  }
+  vTaskDelay(10);
 }
 
+
+void app_main()
+{
+     xTaskCreatePinnedToCore(
+    loop2,
+    "Task_2",
+    1000,
+    NULL,
+    1,
+    &Task2,
+    0);
+
+  xTaskCreatePinnedToCore(
+      loop3,
+      "Task_3",
+      1000,
+      NULL,
+      1,
+      &Task3,
+      0);
+    //void loop
+    for (;;)
+    {
+          printf("Hola desde el loop 1\n");
+        vTaskDelay(1000/portTICK_PERIOD_MS);
+
+    }
+    
 }
