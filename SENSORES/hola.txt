@@ -1,2 +1,29 @@
-Hola sol y dayana
-Hola angel :)
+#include <stdio.h>    
+    #include <freertos/FreeRTOS.h>
+    #include <freertos/task.h>
+    #include <driver/gpio.h> 
+
+    #define pin_a 2 //led incluido
+    #define pin_b 4
+    #define pin_c 5
+    #define pin_d 18
+
+    void app_main(void){
+        
+        gpio_pad_select_gpio(pin_a);
+        gpio_set_direction(pin_a,GPIO_MODE_INPUT);
+        gpio_pad_select_gpio(pin_b);
+        gpio_set_direction(pin_a,GPIO_MODE_INPUT);
+        gpio_pad_select_gpio(pin_c);
+        gpio_set_direction(pin_a,GPIO_MODE_INPUT);
+        gpio_pad_select_gpio(pin_d);
+        gpio_set_direction(pin_a,GPIO_MODE_INPUT);
+
+        for(;;){
+            gpio_get_level(pin_a);
+            gpio_get_level(pin_b);
+            gpio_get_level(pin_c);
+            gpio_get_level(pin_d);
+
+        }
+    }
