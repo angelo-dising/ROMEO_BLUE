@@ -1,0 +1,31 @@
+#include <stdio.h>
+    #include <freertos/FreeRTOS.h>
+    #include <freertos/task.h>
+    #include <driver/gpio.h> 
+
+    #define I_ban 2 //led incluido
+    #define F_ban 4
+    #define NFC 5
+    #define LED 22
+
+
+    void app_main(void){
+        gpio_pad_select_gpio(I_ban);
+        gpio_set_direction(I_ban,GPIO_MODE_INPUT);
+        gpio_pad_select_gpio(LED);
+        gpio_set_direction(LED,GPIO_MODE_OUTPUT);
+        gpio_set_level(LED,0);
+        int estado = gpio_get_level(I_ban);
+        for(;;){
+
+  if(estado == 1){          
+gpio_set_level(LED,1);
+  }
+  else{
+gpio_set_level(LED,0);
+
+  }
+  estado = gpio_get_level(I_ban);
+
+        }
+    }
