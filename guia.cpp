@@ -39,7 +39,12 @@ gpio_pad_select_gpio(numero_del_pin);
 
 printf("HOLA MUNDO");
 
-
+//Digital read
+ int estado = gpio_get_level(22);
+ //debes de crear un avariable que equivalga al nivel del gpio.
+printf("%d",estado);
+estado = gpio_get_level(22);
+ 
 //Ejemplo I2C--------------------------------------------------------------------------------------------------------
 //No usar por el momento
 
