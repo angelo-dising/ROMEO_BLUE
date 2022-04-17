@@ -1,0 +1,99 @@
+#include <stdio.h>
+#include "freertos/FreeRTOS.h"
+#include "freertos/task.h"
+#include "esp_system.h"
+#include "driver/gpio.h"
+
+#define BLINK_GPIO 2
+
+TaskHandle_t Task2, Task3;
+
+//void loop2
+void loop2(void *parameter){
+for(;;){
+         gpio_set_level(27, 1);
+      for (int i = 0; i < 200; i++)
+      {
+        gpio_set_level(14, 1);
+        vTaskDelay(100 / portTICK_PERIOD_MS);
+        gpio_set_level(14, 0);
+        vTaskDelay(100 / portTICK_PERIOD_MS);
+      }
+             gpio_set_level(27, 0);
+      for (int i = 0; i < 200; i++)
+      {
+        gpio_set_level(14, 1);
+        vTaskDelay(100 / portTICK_PERIOD_MS);
+        gpio_set_level(14, 0);
+        vTaskDelay(100 / portTICK_PERIOD_MS);
+      }
+
+       vTaskDelay(10);
+}
+}
+//void loop3
+void loop3(void *parameter){
+  for(;;){
+       gpio_set_level(25, 1);
+      for (int i = 0; i < 200; i++)
+      {
+        gpio_set_level(26, 1);
+        vTaskDelay(100 / portTICK_PERIOD_MS);
+        gpio_set_level(26, 0);
+        vTaskDelay(100 / portTICK_PERIOD_MS);
+      }
+             gpio_set_level(25, 0);
+      for (int i = 0; i < 200; i++)
+      {
+        gpio_set_level(26, 1);
+        vTaskDelay(100 / portTICK_PERIOD_MS);
+        gpio_set_level(26, 0);
+        vTaskDelay(100 / portTICK_PERIOD_MS);
+      }
+ 
+       vTaskDelay(10);
+  }
+}
+
+
+void app_main()
+{
+gpio_pad_select_gpio(13);
+gpio_set_direction(13, GPIO_MODE_OUTPUT);
+gpio_pad_select_gpio(12);
+gpio_set_direction(12, GPIO_MODE_OUTPUT);
+gpio_pad_select_gpio(14);
+gpio_set_direction(14, GPIO_MODE_OUTPUT);
+gpio_pad_select_gpio(27);
+gpio_set_direction(27, GPIO_MODE_OUTPUT);
+gpio_pad_select_gpio(26);
+gpio_set_direction(26, GPIO_MODE_OUTPUT);
+gpio_pad_select_gpio(25);
+gpio_set_direction(25, GPIO_MODE_OUTPUT);
+
+  xTaskCreatePinnedToCore(loop2, "Task_2", 1000, NULL, 1, &Task2, 0);
+  xTaskCreatePinnedToCore(loop3, "Task_3", 1000, NULL, 1, &Task3, 1);
+
+    for(;;)
+    {
+       gpio_set_level(12, 1);
+      for (int i = 0; i < 200; i++)
+      {
+        gpio_set_level(13, 1);
+        vTaskDelay(100 / portTICK_PERIOD_MS);
+        gpio_set_level(13, 0);
+        vTaskDelay(100 / portTICK_PERIOD_MS);
+      }
+             gpio_set_level(12, 0);
+      for (int i = 0; i < 200; i++)
+      {
+        gpio_set_level(13, 1);
+        vTaskDelay(100 / portTICK_PERIOD_MS);
+        gpio_set_level(13, 0);
+        vTaskDelay(100 / portTICK_PERIOD_MS);
+      }
+      
+       vTaskDelay(10);
+    }
+    
+}
