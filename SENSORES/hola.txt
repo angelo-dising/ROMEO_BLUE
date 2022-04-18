@@ -3,13 +3,13 @@
     #include <freertos/task.h>
     #include <driver/gpio.h> 
 
-    #define I_ban 2 //led incluido
+void Banda (){
+
+    #define I_ban 22
     #define F_ban 4
     #define NFC 5
-    #define LED 22
+    #define LED 2
 
-    void app_main(void){
-        
         gpio_pad_select_gpio(I_ban);
         gpio_set_direction(I_ban,GPIO_MODE_INPUT);
         gpio_pad_select_gpio(F_ban);
@@ -20,12 +20,18 @@
         int Est_b = gpio_get_level(F_ban);
 
         for(;;){
+            Est_b=0;
 
-            if (Est_a == 1 || Est_b ==1){
+            if (Est_a == 1){
                 gpio_set_level(LED,1);
             } else {
                 gpio_set_level(LED,0);
             }
 
         }
-    }
+}
+
+void app_main(void){
+    Banda ();
+    
+}
