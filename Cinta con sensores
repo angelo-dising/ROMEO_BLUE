@@ -1,0 +1,44 @@
+#include <stdio.h>
+#include <freertos/FreeRTOS.h>
+#include <freertos/task.h>
+#include <driver/gpio.h> 
+
+#define I_ban 2
+#define F_ban 4
+#define SDC 5
+#define Ban 22
+
+void Banda(int Est_a, int Est_b){
+    int estado1 = Est_a;
+    int estado2 = Est_b;
+    while (estado2 == 0){
+        if (estado1 == 1){
+            gpio_set_level(Ban,1);
+        } else {
+            gpio_set_level(Ban,0);
+        }
+    }
+    if (estado2 == 1){
+        gpio_set_level(Ban,0);
+    }
+
+}
+
+void app_main (void){
+
+    gpio_pad_select_gpio(I_ban);
+    gpio_set_direction(I_ban,GPIO_MODE_INPUT);
+    gpio_pad_select_gpio(F_ban);
+    gpio_set_direction(F_ban,GPIO_MODE_INPUT);
+    gpio_pad_select_gpio(SDC);
+    gpio_set_direction(SDC,GPIO_MODE_INPUT);
+    gpio_pad_select_gpio(Ban);
+    gpio_set_direction(Ban,GPIO_MODE_OUTPUT);
+    int Est_a = gpio_get_level(I_ban);
+    int Est_b = gpio_get_level(F_ban);
+
+    for (;;){        
+        Banda (Est_a,Est_b);
+
+    }
+}
