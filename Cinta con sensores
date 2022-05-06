@@ -6,20 +6,29 @@
 #define I_ban 2
 #define F_ban 4
 #define SDC 5
-#define Ban 22
+#define Ban_a 13
+#define Ban_p 15
 
 void Banda(int Est_a, int Est_b){
-    int estado1 = Est_a;
-    int estado2 = Est_b;
-    while (estado2 == 0){
-        if (estado1 == 1){
-            gpio_set_level(Ban,1);
-        } else {
-            gpio_set_level(Ban,0);
+    int Delay_up = 5;
+    int Delay_down = 5;
+    while (Est_b == 0){
+        if (Est_a == 1){
+            while (Est_b != 1){
+            gpio_set_level(Ban_a,1);
+            gpio_set_level(Ban_p,0);
+            vTaskDelay(Delay_up/portTICK_PERIOD_MS);
+            gpio_set_level(Ban_a,0);
+            gpio_set_level(Ban_p,0);
+            vTaskDelay(Delay_down/portTICK_PERIOD_MS);
+            gpio_get_level(Est_a);
+            }
         }
+
     }
-    if (estado2 == 1){
-        gpio_set_level(Ban,0);
+    if (Est_b == 1){
+        gpio_set_level(Ban_a,0);
+        gpio_set_level(Ban_p,0);
     }
 
 }
@@ -32,13 +41,14 @@ void app_main (void){
     gpio_set_direction(F_ban,GPIO_MODE_INPUT);
     gpio_pad_select_gpio(SDC);
     gpio_set_direction(SDC,GPIO_MODE_INPUT);
-    gpio_pad_select_gpio(Ban);
-    gpio_set_direction(Ban,GPIO_MODE_OUTPUT);
+    gpio_pad_select_gpio(Ban_a);
+    gpio_set_direction(Ban_a,GPIO_MODE_OUTPUT);
+    gpio_pad_select_gpio(Ban_p);
+    gpio_set_direction(Ban_p,GPIO_MODE_OUTPUT);
     int Est_a = gpio_get_level(I_ban);
     int Est_b = gpio_get_level(F_ban);
 
     for (;;){        
         Banda (Est_a,Est_b);
-
     }
 }
