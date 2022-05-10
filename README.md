@@ -16,4 +16,4 @@ Robot SCARA de clasificacion por colores
 
 
 ![Logo](https://github.com/angelo-dising/ROMEO_BLUE/blob/main/PPDC_Logo_01.webp)
-
+![logo](https://github.com/angelo-dising/ROMEO_BLUE/blob/main/SETUP.png)
