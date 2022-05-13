@@ -15,5 +15,6 @@ Robot SCARA de clasificacion por colores
 - [Sol F. Flores](https://github.com/SFCF)
 
 
-![Logo](https://github.com/angelo-dising/ROMEO_BLUE/blob/main/PPDC_Logo_01.webp)
-![logo](https://github.com/angelo-dising/ROMEO_BLUE/blob/main/SETUP.png)
+<img src="https://github.com/angelo-dising/ROMEO_BLUE/blob/main/PPDC_Logo_01.webp" height="342"/> <img src="https://github.com/angelo-dising/ROMEO_BLUE/blob/main/SETUP.png" height="342"/>
+
+![logo]()
